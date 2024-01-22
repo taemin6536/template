@@ -1,0 +1,13 @@
+package com.emmett.bookclub.domain.system.code;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CodeRepository extends JpaRepository<Code, CodeKey> {
+    List<Code> findByUpperCodeOrderByColumnOrdAsc(String upperCode);
+
+    List<Code> findByUpperCode(String upperCode);
+}

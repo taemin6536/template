@@ -1,0 +1,32 @@
+package com.emmett.bookclub.domain.system.code;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+public class CodeServiceImpl implements CodeService {
+    private final CodeRepository codeRepository;
+
+    private List<Map<String, Object>> getKeyValuePair(String upperCode) {
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        codeRepository.findByUpperCodeOrderByColumnOrdAsc(upperCode)
+                .stream()
+                .forEach(code -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("code", code.getCode());
+                    map.put("value", code.getValue());
+
+                    result.add(map);
+                });
+        return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> getCodeList(String code) {
+        return this.getKeyValuePair(code);
+    }
+}
